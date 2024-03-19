@@ -1,118 +1,180 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import { SideDes } from "@/component/SideDes";
+import { SideMenu } from "@/component/SideMenu";
+import React, { useState } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+let sideMenus = [
+  {
+    id: 1,
+    title: "Travel",
+    buttonText: "Travel",
+    contents: [
+      {
+        name: "Benefit of Travel Insurance",
+        dateOfYear: "Mar 11 2024",
+        isVerified: false,
+        tag: "Travel",
+        description:
+          "The Best Women's Clothing Made Available for You with our Accessories, T-Shirts, Dresses, Sweatshirts, Pants, Jewelry, Shoes, Bag, and many more about Women Fashion.",
+      },
+      {
+        name: "Romantic Hideaways: Intimate Retreats for Couples in Southernmost India",
+        dateOfYear: "Feb 29 2024",
+        isVerified: false,
+        tag: "Travel",
+        description:
+          "The Best Women's Clothing Made Available for You with our Accessories, T-Shirts, Dresses, Sweatshirts, Pants, Jewelry, Shoes, Bag, and many more about Women Fashion.",
+      },
+      {
+        name: "Georgia Travel Tips for First-time Visitors",
+        dateOfYear: "Jan 29 2024",
+        isVerified: false,
+        tag: "Travel",
+        description:
+          "The Best Women's Clothing Made Available for You with our Accessories, T-Shirts, Dresses, Sweatshirts, Pants, Jewelry, Shoes, Bag, and many more about Women Fashion.",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Fashion",
+    buttonText: "Fashion",
+    contents: [
+      {
+        name: "Get Ready to Shine: Unleash Your Professional Aura with Glasses",
+        dateOfYear: "Feb 29 2024",
+        isVerified: false,
+        tag: "Fashion",
+        description:
+          "Wearing glasses can enhance your professional and business appearance. We need to consider the style of glasses, the material of the glasses, the comfort of the frame, lens requirements, and specific requirements for the work environment.",
+      },
+      {
+        name: "One Piece Dress For Women",
+        dateOfYear: "Feb 16 2024",
+        isVerified: false,
+        tag: "Fashion",
+        description:
+          "In the ever-evolving world of fashion, certain classics stand the test of time, and one such wardrobe staple that has maintained its allure is the one-piece dress for women. Combining style, comfort, and versatility, these dresses have been a fashion favorite for decades, transcending trends and seasons.",
+      },
+      {
+        name: "Make Your Day Amazing With Good Fashion",
+        dateOfYear: "Dec 23 '23 2023",
+        isVerified: false,
+        tag: "Fashion",
+        description:
+          "The Best Women's Clothing Made Available for You with our Accessories, T-Shirts, Dresses, Sweatshirts, Pants, Jewelry, Shoes, Bag, and many more about Women Fashion.",
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Technology",
+    buttonText: "Technology",
+    contents: [
+      {
+        name: "AI in Healthcare",
+        dateOfYear: "Feb 1 2024",
+        isVerified: false,
+        tag: "Technology",
+        description:
+          "Artificial Intelligence (AI) in healthcare is not just a futuristic vision but a present-day reality that's transforming the landscape of medical care, diagnostics, and patient engagement.",
+      },
+      {
+        name: "The Importance of Data Science in Today’s World",
+        dateOfYear: "Mar 12 2024",
+        isVerified: false,
+        tag: "Technology",
+        description:
+          "In an era where data is ubiquitously recognized as the new oil, the role of data science in deciphering complex datasets to yield actionable insights cannot be overstated.",
+      },
+      {
+        name: "The Pioneer: Sherry Guidry Device Technologies",
+        dateOfYear: "Mar 13 2024",
+        isVerified: false,
+        tag: "Technology",
+        description:
+          "Once, inside the busy global of generation, there lived a visionary called Sherry Guidry.",
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "Branding",
+    buttonText: "Branding",
+    contents: [
+      {
+        name: "The Guild - Rebranding in open source",
+        dateOfYear: "Feb 24 2024",
+        isVerified: false,
+        tag: "Branding",
+        description:
+          "The Guild never had a marketing, design or branding function As we see our tools as best of breed in any category we work in, we want to get more exposure to it on our ecosystem.",
+      },
+      {
+        name: "Best digital marketing agency in India",
+        dateOfYear: "Feb 19 2024",
+        isVerified: false,
+        tag: "Branding",
+        description:
+          "In the digital age, a strong online presence is essential for success. Our digital marketing services are tailored to enhance your brand's visibility and drive meaningful engagement.",
+      },
+      {
+        name: "Digital marketing and advertising agency",
+        dateOfYear: "Feb 13 2024",
+        isVerified: false,
+        tag: "Branding",
+        description:
+          "Are you ready to take your brand to new heights? Look no further than Akko World Wide Communications Pvt Ltd, Hyderabad's premier digital marketing agency.",
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: "Financial",
+    buttonText: "Financial",
+    contents: [
+      {
+        name: "Morgan Stanley names a head of artificial intelligence",
+        dateOfYear: "Mar 14 2024",
+        isVerified: false,
+        tag: "Financial",
+        description:
+          "Morgan Stanley promoted a tech executive in its wealth management division to become the bank’s first head of firm-wide Artificial Intelligence, CNBC has learned.",
+      },
+      {
+        name: "Wall Street isn’t happy Kevin Plank is back as Under Armour CEO, shares fall 12%",
+        dateOfYear: "Mar 14 2024",
+        isVerified: false,
+        tag: "Financial",
+        description:
+          "Shares of Under Armour plunged about 12% after the retailer announced that CEO Stephanie Linnartz would be stepping down after barely a year on the job.",
+      },
+      {
+        name: "SpaceX’s Starship notches flight test milestones, breaks up over Indian Ocean",
+        dateOfYear: "Mar 14 2024",
+        isVerified: false,
+        tag: "Financial",
+        description:
+          "The company pushed development of the mammoth vehicle past new milestones, with NASA chief Bill Nelson congratulating SpaceX “on a successful test flight!”",
+      },
+    ],
+  },
+];
 
 export default function Home() {
+  const [sec, setSec] = useState<number>(1);
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <div className="flex h-screen">
+      <div className="bg-gray-600 w-[300px]  text-white ">
+        {sideMenus.map((menu) => {
+          // console.log(menu);
+          return <SideMenu data={menu} state={setSec} />;
+        })}
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className="flex w-screen justify-center py-10">
+        {" "}
+        <SideDes data={sideMenus[sec]} />
       </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
